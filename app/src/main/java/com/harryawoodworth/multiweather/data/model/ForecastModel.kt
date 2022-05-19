@@ -7,14 +7,14 @@ import com.google.gson.annotations.SerializedName
  * @SerializedName is used to determine the exact key in the response, and avoid obfuscation issues
  * https://stackoverflow.com/questions/28957285/what-is-the-basic-purpose-of-serializedname-annotation-in-android-using-gson
  */
-data class WeatherModel(
+data class ForecastModel(
     @SerializedName("isDaytime")
-    var isDaytime: Boolean = true,
+    val isDaytime: Boolean = true,
     @SerializedName("temperature")
-    var temperature: Int = 0,
+    val temperature: Int = 0,
     @SerializedName("windSpeed")
-    var windSpeed: String = "0 mph",
+    val windSpeed: String = "0 mph",
     @SerializedName("shortForecast")
-    var shortForecast: String = "missing"
+    val shortForecast: String = "missing"
 )
 
