@@ -1,12 +1,15 @@
 package com.harryawoodworth.multiweather.data.api
 
-import com.harryawoodworth.multiweather.data.model.WeatherGridpointModel
+import com.harryawoodworth.multiweather.data.model.WeatherResponseModel
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 
+/**
+ * Interface for making calls to the Weather API Endpoint
+ */
 interface WeatherService {
 
     /**
@@ -34,6 +37,15 @@ interface WeatherService {
     suspend fun getForecast(
         @Path("station") station: String,
         @Path("gridX") gridX: Int,
-        @Path("gridY") gridY: Int,
-    ) : Response<WeatherGridpointModel>?
+        @Path("gridY") gridY: Int
+    ) : Response<WeatherResponseModel>?
+
+    /**
+     * Get the gridpoint
+     */
+    @GET("/points/{latitude},{longitude}")
+    suspend fun getGridpointAPIEndpoint(
+        @Path("latitude") latitude: Double,
+        @Path("longitude") longitude: Double
+    ): Response<WeatherResponseModel>?
 }

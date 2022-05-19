@@ -29,6 +29,15 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        GlobalScope.launch {
+            val result = weatherInterface.getGridpointAPIEndpoint(40.7512,-73.8903)
+            if (result != null) {
+                Log.d(TAG, "Result: ${result.body().toString()}")
+            } else {
+                Log.e(TAG, "Result is null")
+            }
+        }
+
     }
 
 

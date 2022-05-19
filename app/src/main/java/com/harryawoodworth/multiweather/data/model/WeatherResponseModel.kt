@@ -3,9 +3,10 @@ package com.harryawoodworth.multiweather.data.model
 import com.google.gson.annotations.SerializedName
 
 /**
- * Model for the initial data returned from https://api.weather.gov/gridpoints/{station}/{gridX},{gridY}/forecast
+ * Model for the data returned by the Weather API
+ * Useful data is in the properties model
  */
-data class WeatherGridpointModel(
+data class WeatherResponseModel(
     @SerializedName("properties")
     var properties: WeatherPropertiesModel = WeatherPropertiesModel()
 )
