@@ -6,8 +6,13 @@ import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import com.harryawoodworth.multiweather.R
 import com.harryawoodworth.multiweather.data.api.WeatherService
+import com.harryawoodworth.multiweather.data.model.ForecastModel
+import com.harryawoodworth.multiweather.data.repository.WeatherViewModel
 import com.harryawoodworth.multiweather.utils.PermissionsManager
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -19,45 +24,56 @@ class MainActivity : AppCompatActivity() {
         const val TAG = "MULTIWEATHER"
     }
 
+    // Create a ViewModel the first time this Activity is created
+    // Re-created Activities will receive this same instance
+    private val weatherViewModel: WeatherViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Check/Ask for location permissions
-        if (!PermissionsManager.isPermissionGranted(this,  Manifest.permission.ACCESS_COARSE_LOCATION)) {
+        // Ask for permissions, make call to api, get forecastModel instance
+        getLocalWeather()
+
+    }
+
+    /**
+     * Get the local weather forecast as a forecastModel instance from the weatherViewModel
+     */
+    private fun getLocalWeather() {
+        // Check/Ask for Location permissions
+        if (!PermissionsManager.isPermissionGranted(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
             PermissionsManager.checkPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
         } else {
-            testAPI()
-        }
-
-    }
-
-    private fun testAPI() {
-
-        val weatherInterface = WeatherService.create()
-
-        GlobalScope.launch {
-
-            val locationManager = getSystemService(Context.LOCATION_SERVICE)
-
-
-            val result = weatherInterface.getForecast("OKX",36,36)
-            if (result != null) {
-                Log.d(TAG, "Result: ${result.body().toString()}")
-            } else {
-                Log.e(TAG, "Result is null")
-            }
-        }
-
-        GlobalScope.launch {
-            val result = weatherInterface.getGridpointAPIEndpoint(40.7512,-73.8903)
-            if (result != null) {
-                Log.d(TAG, "Result: ${result.body().toString()}")
-            } else {
-                Log.e(TAG, "Result is null")
-            }
+            // Get the local weather forecast
+            weatherViewModel.getLocalWeatherForecast().observe(this, Observer<ForecastModel> {
+                // TODO: update the ui using it (forecastModel)
+                Log.d(TAG, "Weather Forecast Result: $it")
+            })
         }
     }
+
+//    GlobalScope.launch {
+//        val result = weatherInterface.getGridpointAPIEndpoint(40.7512,-73.8903)
+//        if (result != null) {
+//            Log.d(TAG, "Result: ${result.body().toString()}")
+//        } else {
+//            Log.e(TAG, "Result is null")
+//        }
+//    }
+//
+//    GlobalScope.launch {
+//
+//        val locationManager = getSystemService(Context.LOCATION_SERVICE)
+//
+//
+//        val result = weatherInterface.getForecast("OKX",36,36)
+//        if (result != null) {
+//            Log.d(TAG, "Result: ${result.body().toString()}")
+//        } else {
+//            Log.e(TAG, "Result is null")
+//        }
+//    }
 
 
     /**
@@ -73,8 +89,8 @@ class MainActivity : AppCompatActivity() {
             when(requestCode) {
                 PermissionsManager.COARSE_LOCATION_CODE ->  {
                     Log.d(TAG, "Coarse Location Permission Granted")
-                    // Re-run testAPI() once permission has been granted
-                    testAPI()
+                    // Re-run getLocalWeather() once permission has been granted
+                    getLocalWeather()
                 }
                 PermissionsManager.FINE_LOCATION_CODE ->  Log.d(TAG, "Fine Location Permission Granted")
             }
