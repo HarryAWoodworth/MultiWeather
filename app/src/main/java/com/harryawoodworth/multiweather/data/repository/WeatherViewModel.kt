@@ -9,7 +9,7 @@ import com.harryawoodworth.multiweather.data.model.ForecastModel
 import kotlinx.coroutines.launch
 
 /**
- * This is a ViewModel class designed to store weather forecast data
+ * ViewModel class designed to store weather forecast data.
  */
 class WeatherViewModel: ViewModel() {
 
@@ -17,8 +17,8 @@ class WeatherViewModel: ViewModel() {
     private var weatherService = WeatherService.create()
 
     /**
-     * We use LiveData so that the data can be observed in a lifecycle-safe way
-     * We use 'by lazy{}' as a way to compute the value upon first access using loadLocalWeatherForecast()
+     * Use LiveData so that the data can be observed in a lifecycle-safe way.
+     * Use 'by lazy{}' to compute the value upon first access using loadLocalWeatherForecast().
      */
     private val localForecast: MutableLiveData<ForecastModel> by lazy {
         // We use '.also' to set localForecast by calling loadLocalWeatherForecast
@@ -29,14 +29,14 @@ class WeatherViewModel: ViewModel() {
     }
 
     /**
-     * Public function used to return the current state of localForecast
+     * Return the current state of localForecast.
      */
     fun getLocalWeatherForecast(): LiveData<ForecastModel> {
         return localForecast
     }
 
     /**
-     * Use a Coroutine in the ViewModelScope to fetch the local forecast using WeatherService
+     * Use a Coroutine in the ViewModelScope to fetch the local forecast using WeatherService.
      * https://developer.android.com/topic/libraries/architecture/coroutines
      */
     private fun loadLocalWeatherForecast() {

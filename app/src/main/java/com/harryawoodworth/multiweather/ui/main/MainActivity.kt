@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * Get the local weather forecast as a forecastModel instance from the weatherViewModel
+     * Get the local weather forecast as a forecastModel instance from the weatherViewModel.
      */
     private fun getLocalWeather() {
         // Check/Ask for Location permissions
@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
 
 
     /**
-     * Called when a user accepts or declines a permission
+     * Called when a user accepts or declines a permission.
      */
     override fun onRequestPermissionsResult(
         requestCode: Int,
