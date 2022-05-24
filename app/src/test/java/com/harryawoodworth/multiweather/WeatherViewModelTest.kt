@@ -3,16 +3,13 @@ package com.harryawoodworth.multiweather
 import androidx.lifecycle.Observer
 import com.harryawoodworth.multiweather.data.api.WeatherService
 import com.harryawoodworth.multiweather.data.model.ForecastModel
-import com.harryawoodworth.multiweather.data.repository.WeatherViewModel
+import com.harryawoodworth.multiweather.ui.main.viewmodel.WeatherViewModel
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
-import org.junit.Test
 
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
 /**
