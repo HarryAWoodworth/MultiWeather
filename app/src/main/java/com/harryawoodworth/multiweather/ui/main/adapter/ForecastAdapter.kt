@@ -11,7 +11,7 @@ import com.harryawoodworth.multiweather.data.model.ForecastModel
 /**
  * A custom adapter for the weather recyclerview
  */
-class ForecastAdapter(private val forecasts: Array<ForecastModel>) :
+class ForecastAdapter(private val forecasts: MutableList<ForecastModel>) :
     RecyclerView.Adapter<ForecastAdapter.ViewHolder>() {
 
     /**
