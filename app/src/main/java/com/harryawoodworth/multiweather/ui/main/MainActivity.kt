@@ -13,6 +13,8 @@ import com.harryawoodworth.multiweather.R
 import com.harryawoodworth.multiweather.data.api.WeatherService
 import com.harryawoodworth.multiweather.data.model.ForecastModel
 import com.harryawoodworth.multiweather.data.repository.WeatherViewModel
+import com.harryawoodworth.multiweather.databinding.ActivityMainBinding
+import com.harryawoodworth.multiweather.ui.main.adapter.ForecastAdapter
 import com.harryawoodworth.multiweather.utils.PermissionsManager
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -24,13 +26,22 @@ class MainActivity : AppCompatActivity() {
         const val TAG = "MULTIWEATHER"
     }
 
+    // View Binding
+    private lateinit var binding: ActivityMainBinding
+
+    // RecyclerView Adapter
+    private lateinit var forecastAdapter: ForecastAdapter
+
     // Create a ViewModel the first time this Activity is created
     // Re-created Activities will receive this same instance
     private val weatherViewModel: WeatherViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        // Set up view binding
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
         // Ask for permissions, make call to api, get forecastModel instance
         getLocalWeather()
@@ -47,8 +58,9 @@ class MainActivity : AppCompatActivity() {
         } else {
             // Get the local weather forecast
             weatherViewModel.getLocalWeatherForecast().observe(this, Observer<ForecastModel> {
-                // TODO: update the ui using it (forecastModel)
                 Log.d(TAG, "Weather Forecast Result: $it")
+                forecastAdapter = ForecastAdapter(arrayOf(it))
+                binding.recyclerView.adapter = forecastAdapter
             })
         }
     }
