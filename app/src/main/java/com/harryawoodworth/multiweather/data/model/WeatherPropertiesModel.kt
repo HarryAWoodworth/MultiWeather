@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName
  */
 data class WeatherPropertiesModel(
     @SerializedName("periods")
-    val periods: List<ForecastModel> = listOf(),
+    val periods: MutableList<ForecastModel> = mutableListOf(),
     @SerializedName("forecast")
     val forecastAPIEndpoint: String = ""
 )
