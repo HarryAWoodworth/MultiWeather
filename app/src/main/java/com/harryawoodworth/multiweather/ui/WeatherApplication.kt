@@ -1,4 +1,4 @@
-package com.harryawoodworth.multiweather.ui.base
+package com.harryawoodworth.multiweather.ui
 
 import android.app.Application
 
