@@ -1,4 +1,4 @@
-package com.harryawoodworth.multiweather.utils
+package com.harryawoodworth.multiweather.util
 
 import android.Manifest
 import android.app.Activity
